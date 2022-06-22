@@ -1,0 +1,94 @@
+<div class="col-lg-12">
+    <h3>Order</h3>
+</div>
+<div *ngIf="showMessageSuccess || showMessageError" class="col-lg-12 pt-4 pb-lg-0 ">
+    <p-messages [(value)]="messageComponente" [closable]="false"></p-messages>
+</div>
+<div class="row">
+    <div class="col-lg-10 col-12">
+        <label style="font-weight: bold;" class="pb-2" for="nameId ">Client</label>
+        <input disabled="true" id="nameId " [(ngModel)]="client.name " name="name " type="text " class="form-control " placeholder="Name ">
+    </div>
+    <div class="col-lg-1 tex-center col-6 align-self-end">
+        <button class="me-3" pButton (click)="showClient()" pTooltip="Select client" tooltipPosition="top" icon="pi pi-users" name="selected">
+        </button>
+    </div>
+    <div class="col-lg-1 col-6 align-self-end" style="text-align: right;">
+        <button class="me-3" pButton (click)="showProduct()" pTooltip="Select product" tooltipPosition="top" icon="pi pi-inbox" name="selected">
+        </button>
+    </div>
+    <div class="col-lg-12 col-12 pt-4">
+        <p-table [columns]="colsOrderDetail" [value]="listOrderDetail" responsiveLayout="scroll">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th class="text-center" *ngFor="let col of columns">
+                        {{col.header}}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                    <td style="text-align: right;" *ngFor="let col of columns;let i=index">
+                        <span *ngIf="i!=1">{{rowData[col.field]}}</span>
+                        <span *ngIf="i===1">{{rowData[col.field].name}}</span>
+                        <span *ngIf="i===0">{{i+1}}</span>
+                        <button pButton *ngIf="i===4" (click)="deleteOrderDetail(rowData)" pTooltip="Remove" tooltipPosition="top" icon="pi pi-trash" iconPos="left" name="trash-2">
+                        </button>
+
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div style="text-align: right;" class="col-lg-12 pt-4">
+        <span style="font-weight: bold;">Total: </span><span>{{order.total}}</span>
+    </div>
+    <div style="text-align: right;" class="col-lg-12 pt-4">
+        <button [disabled]="enableButton()" label="SAVE" (click)="saveOrder()" pButton icon="pi pi-save" iconPos="left"></button>
+    </div>
+</div>
+
+
+
+
+<p-dialog [(visible)]="displayDialogClient" [breakpoints]="{ '960px': '75vw', '640px': '100vw'} " [style]="{width: '50vw'} " [modal]="true">
+    <p-table [columns]="colsClient" [value]="listClient" responsiveLayout="scroll">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th class="text-center" *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                <td class="text-center" *ngFor="let col of columns;let i=index">
+                    {{rowData[col.field]}}
+                    <button class="me-3" pButton pTooltip="Select" tooltipPosition="top" *ngIf="i===3" (click)="selectClient(rowData)" icon="pi pi-check" name="select">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-dialog>
+
+<p-dialog [(visible)]="displayDialogProduct" [breakpoints]="{ '960px': '75vw', '640px': '100vw'} " [style]="{width: '50vw'} " [modal]="true">
+    <p-table [columns]="colsProduct" [value]="listProduct" responsiveLayout="scroll">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th class="text-center" *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                <td class="text-center" *ngFor="let col of columns;let i=index">
+                    {{rowData[col.field]}}
+                    <button class="me-3" pButton pTooltip="Select" tooltipPosition="top" *ngIf="i===3" (click)="selectProduct(rowData)" icon="pi pi-check" name="selected">
+                     </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-dialog>

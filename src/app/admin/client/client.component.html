@@ -1,0 +1,53 @@
+<div class="col-lg-12 pt-4">
+    <h3>Clients</h3>
+</div>
+<div class="col-lg-12 pt-4">
+    <p-button label="NEW" icon="pi pi-plus" iconPos="left" (onClick)="showDialog()"></p-button>
+</div>
+<div *ngIf="showMessageSuccess || showMessageError" class="col-lg-12 pt-4 pb-lg-0 ">
+    <p-messages [(value)]="messageComponente" [closable]="false"></p-messages>
+</div>
+<div class="col-lg-12 pt-4 pb-4">
+    <p-table [columns]="cols" [value]="listClients" responsiveLayout="scroll">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th class="text-center" *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                <td class="text-center" *ngFor="let col of columns;let i=index">
+                    {{rowData[col.field]}}
+                    <button class="me-3" pButton *ngIf="i===3" (click)="updateClient(rowData)" icon="pi pi-pencil" name="edit">
+                  </button>
+                    <button pButton *ngIf="i===3" (click)="deleteClient(rowData)" icon="pi pi-trash" iconPos="left" name="trash-2">
+                  </button>
+
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="displayDialog" [breakpoints]="{ '960px': '75vw', '640px': '100vw'} " [style]="{width: '50vw'} " [modal]="true" (onHide)="closeDialog()">
+    <form #f="ngForm" ngNativateValidate (ngSubmit)="addClient(f)">
+        <div class="form-group pb-4 ">
+            <label style="font-weight: bold;" for="priceId ">Dni</label>
+            <input id="priceId " [(ngModel)]="client.dni" name="dni" type="text" class="form-control" placeholder="Dni">
+        </div>
+        <div class="form-group pb-4">
+            <label style="font-weight: bold;" for="nameId ">Name</label>
+            <input id="nameId " [(ngModel)]="client.name" name="name" type="text " class="form-control" placeholder="Name ">
+        </div>
+        <div class="form-group ">
+            <label style="font-weight: bold;" for="descriptionId ">Last name</label>
+            <input id="descriptionId " [(ngModel)]="client.lastName" name="lastName" type="text" class="form-control" placeholder="Last name">
+        </div>
+        <div class="col-lg-12 text-center pt-4">
+            <button [disabled]="enableButton()" pButton type="submit" label="SAVE" icon="pi pi-save" iconPos="left"></button>
+
+        </div>
+    </form>
+</p-dialog>

@@ -1,0 +1,7 @@
+<div style="background-color: #2196F3; height: 50px;">
+    <div *ngIf="loginService.isLoging()" class="row justify-content-end">
+        <div style="text-align: right;" class="col-1 mt-2 me-3">
+            <button (click)="logout()" pTooltip="Logout" tooltipPosition="bottom" pButton pRipple type="button" icon="pi pi-sign-out" class="p-button-rounded p-button-outlined"></button>
+        </div>
+    </div>
+</div>
